@@ -1,7 +1,7 @@
 HELP.md
 venv/
 target/
-!.mvn/wrapper/maven-wrapper.jar
+!LocalStorageMarketData/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -15,7 +15,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+LocalStorageMarketData/.idea
 *.iws
 *.iml
 *.ipr
