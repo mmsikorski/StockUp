@@ -22,7 +22,7 @@ public class PythonProcessBuilder {
     }
 
     public String getFolderPath() {
-        return System.getProperty("user.dir")+"/target/venv"; //Build venv in target folder
+        return System.getProperty("user.dir")+"/venv"; //Build venv in target folder
     }
 
     public void buildPythonProcess() {
@@ -39,6 +39,12 @@ public class PythonProcessBuilder {
                 log.info("[LocalStorageMarketData-{}] Venv is created successfully", this.threadName);
                 //TODO: Write logic to retry build python venv
                 //TODO: Now it works only on linux
+                //TODO: Check that venv was previously created and still exists
+                //TODO: Write logic that can find python version in system
+                //TODO: We should find python source files, not only alias
+                //TODO: python requirements
+                //
+                //TODO: Remove venv from target and add to .gitignore
             } catch (InterruptedException e) {
                 log.error("[LocalStorageMarketData-{}] Retry build python venv", this.threadName);
                 throw new RuntimeException(e);
