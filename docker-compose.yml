@@ -1,0 +1,10 @@
+version: "3"
+services:
+  market-data-app:
+    container_name: localStorageMarketData
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 8070:8080
+
+
