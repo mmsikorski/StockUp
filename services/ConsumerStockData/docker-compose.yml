@@ -1,0 +1,8 @@
+version: "3"
+services:
+  consumer-stock-data-app:
+    container_name: consumerStockData
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 8071:2000
