@@ -10,4 +10,5 @@ public class LocalStorageService {
         LocalStorage.highPrices.put(date, high);
         LocalStorage.closePrices.put(date, close);
     }
+
 }

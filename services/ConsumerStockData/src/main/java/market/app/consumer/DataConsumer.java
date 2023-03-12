@@ -15,7 +15,7 @@ public class DataConsumer {
 
     @Autowired
     PriceModelMapper priceModelMapper;
-    static long countRequests;
+    static volatile long countRequests;
     String threadName;
     Thread thread;
 
@@ -46,7 +46,7 @@ public class DataConsumer {
             if ( (l - e) % 1000 == 0 ) {
                 String response = restTemplate.getForObject(url, String.class);
                 try {
-                    countRequests++;
+                    extracted();
                     List<PriceModel> priceModels = priceModelMapper.fromStringToListPrice(response);
                     priceModels.forEach(x -> log.info("[ConsumerStockData] (Thread: {}) | Req: {} | Received data: {}",
                             this.thread.getName() , countRequests , x));
@@ -56,5 +56,9 @@ public class DataConsumer {
                 }
             }
         }
+    }
+
+    private static synchronized void extracted() {
+        countRequests++;
     }
 }
