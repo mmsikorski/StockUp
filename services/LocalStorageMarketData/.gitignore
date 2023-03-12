@@ -4,7 +4,6 @@ target/
 !LocalStorageMarketData/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
 ### STS ###
 .apt_generated
 .classpath
@@ -19,6 +18,7 @@ LocalStorageMarketData/.idea
 *.iws
 *.iml
 *.ipr
+.idea
 
 ### NetBeans ###
 /nbproject/private/
