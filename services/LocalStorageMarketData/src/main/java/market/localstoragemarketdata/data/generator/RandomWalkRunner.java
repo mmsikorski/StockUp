@@ -1,14 +1,17 @@
 package market.localstoragemarketdata.data.generator;
 
 import lombok.extern.slf4j.Slf4j;
+import market.localstoragemarketdata.database.storage.FinancialDataStorage;
 
 @Slf4j
 public class RandomWalkRunner {
 
     RandomWalkGeneratorScheduler randomWalkGeneratorScheduler;
+    FinancialDataStorage financialDataStorage;
 
-    public RandomWalkRunner() {
-        randomWalkGeneratorScheduler = new RandomWalkGeneratorScheduler();
+    public RandomWalkRunner(FinancialDataStorage financialDataStorage) {
+        this.financialDataStorage = financialDataStorage;
+        randomWalkGeneratorScheduler = new RandomWalkGeneratorScheduler(financialDataStorage);
         start();
     }
 

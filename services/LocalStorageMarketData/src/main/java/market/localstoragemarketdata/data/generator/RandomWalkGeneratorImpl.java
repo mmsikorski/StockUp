@@ -2,6 +2,7 @@ package market.localstoragemarketdata.data.generator;
 
 import market.localstoragemarketdata.data.LocalStorageRandomWalkService;
 import market.localstoragemarketdata.data.prices.Mean;
+import market.localstoragemarketdata.database.storage.FinancialDataStorage;
 
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -9,10 +10,12 @@ import java.util.Random;
 public class RandomWalkGeneratorImpl implements RandomWalkGenerator {
 
     private final Random random;
+    private final FinancialDataStorage storage;
     private float initMeanValue;
     private final LocalStorageRandomWalkService localStorageRandomWalkService;
 
-    public RandomWalkGeneratorImpl() {
+    public RandomWalkGeneratorImpl(FinancialDataStorage financialDataStorage) {
+        this.storage = financialDataStorage;
         this.random = new Random();
         this.localStorageRandomWalkService = new LocalStorageRandomWalkService();
         initMeanValue = this.random.nextFloat();
@@ -37,9 +40,10 @@ public class RandomWalkGeneratorImpl implements RandomWalkGenerator {
 //        float randomValue = random.nextFloat();
 //        float unchangedInitMeanValue = initMeanValue;
 
-        double randomValue = random.nextGaussian(0, 10);
+        double randomValue = 10.0*random.nextGaussian(0, 1);
         float finalRandomValue = Float.parseFloat(String.valueOf(randomValue));
-        initMeanValue = initMeanValue + finalRandomValue < 0 ? initMeanValue : initMeanValue + finalRandomValue;
+        initMeanValue = initMeanValue + finalRandomValue < 0 || initMeanValue + finalRandomValue > 2500 ? initMeanValue : initMeanValue + finalRandomValue;
+
         return initMeanValue;
     }
 
@@ -53,6 +57,13 @@ public class RandomWalkGeneratorImpl implements RandomWalkGenerator {
         String price = String.valueOf(value);
         Mean mean = new Mean();
         mean.setPrice(price);
+
+        String stringValue = String.valueOf(value);
+//        String dateString = date.toString();
+
+        storage.save(date, stringValue, stringValue, stringValue, stringValue);
+
+
         localStorageRandomWalkService.loadMeanRandomValueToLocalStorage(date, mean);
     }
 
