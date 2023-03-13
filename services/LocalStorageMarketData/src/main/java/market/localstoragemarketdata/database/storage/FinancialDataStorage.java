@@ -10,14 +10,21 @@ import java.time.LocalDateTime;
 @Component
 public class FinancialDataStorage {
 
-    @Autowired
+    final
     FinancialDataRepo financialDataRepo;
-    @Autowired
+    final
     FinancialDataMapper financialDataMapper;
+
+    public FinancialDataStorage(FinancialDataRepo financialDataRepo, FinancialDataMapper financialDataMapper) {
+        this.financialDataRepo = financialDataRepo;
+        this.financialDataMapper = financialDataMapper;
+    }
 
     public void save(LocalDateTime date, String open, String close, String low, String high) {
         FinancialDataEntity financialDataEntity = financialDataMapper.toEntity(date, open, close, low, high);
         financialDataRepo.save(financialDataEntity);
     }
+
+    //TODO: Kontroler do wyciągania danych z bazy
 
 }
