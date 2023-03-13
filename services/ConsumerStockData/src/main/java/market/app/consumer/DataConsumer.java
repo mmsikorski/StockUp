@@ -6,8 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import market.app.data.PriceModel;
 import market.app.data.PriceModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.ConnectException;
 import java.util.List;
 
 @Slf4j
@@ -15,7 +17,7 @@ public class DataConsumer {
 
     @Autowired
     PriceModelMapper priceModelMapper;
-    static long countRequests;
+    static volatile long countRequests;
     String threadName;
     Thread thread;
 
@@ -44,9 +46,10 @@ public class DataConsumer {
         while (true) {
             long e = System.currentTimeMillis();
             if ( (l - e) % 1000 == 0 ) {
-                String response = restTemplate.getForObject(url, String.class);
+                String response = null;
+                response = restTemplate.getForObject(url, String.class); //TODO: It's not safe
                 try {
-                    countRequests++;
+                    extracted();
                     List<PriceModel> priceModels = priceModelMapper.fromStringToListPrice(response);
                     priceModels.forEach(x -> log.info("[ConsumerStockData] (Thread: {}) | Req: {} | Received data: {}",
                             this.thread.getName() , countRequests , x));
@@ -57,4 +60,8 @@ public class DataConsumer {
             }
         }
     }
+
+    private static synchronized void extracted() {
+        countRequests++;
+    } //TODO: Doesn't work properly
 }

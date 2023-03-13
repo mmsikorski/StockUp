@@ -1,10 +1,24 @@
 version: "3"
 services:
-  market-data-app:
-    container_name: localStorageMarketData
-    build:
-      dockerfile: Dockerfile
+  db:
+    container_name: postgres
+    image: postgres:15.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pass
     ports:
-      - 8070:8080
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
+#  market-data-app:
+#    container_name: localStorageMarketData
+#    build:
+#      dockerfile: Dockerfile
+#    ports:
+#      - 8070:8080
 
 
