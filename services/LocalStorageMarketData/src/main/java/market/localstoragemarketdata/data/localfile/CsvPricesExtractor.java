@@ -6,6 +6,7 @@ import market.localstoragemarketdata.data.prices.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 @Slf4j
@@ -15,7 +16,8 @@ public class CsvPricesExtractor {
         LocalStorageService localStorageService = new LocalStorageService();
         //String path = "/Users/dev/Desktop/dev/ts2vg/datasets/GOOG_MAX.csv";
         //        String path = "/Users/dev/Desktop/dev/market/LocalStorageMarketData/GOOG_MAX.csv";
-        String path = "dataset/GOOG_MAX.csv";
+        String path = "/Users/dev/Desktop/dev/StockUp/services/LocalStorageMarketData/dataset/GOOG_MAX.csv";
+//        String path = "/dataset/GOOG_MAX.csv";
         File file = new File(path);
 
         try {
