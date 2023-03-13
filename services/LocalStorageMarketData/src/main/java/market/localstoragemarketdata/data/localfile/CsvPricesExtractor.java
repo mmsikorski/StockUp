@@ -3,9 +3,11 @@ package market.localstoragemarketdata.data.localfile;
 import lombok.extern.slf4j.Slf4j;
 import market.localstoragemarketdata.data.LocalStorageService;
 import market.localstoragemarketdata.data.prices.*;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 @Slf4j
@@ -13,16 +15,12 @@ public class CsvPricesExtractor {
 
     public void getPrices() {
         LocalStorageService localStorageService = new LocalStorageService();
-        //String path = "/Users/dev/Desktop/dev/ts2vg/datasets/GOOG_MAX.csv";
-        //        String path = "/Users/dev/Desktop/dev/market/LocalStorageMarketData/GOOG_MAX.csv";
-        String path = "dataset/GOOG_MAX.csv";
-        File file = new File(path);
+        Resource resource = new ClassPathResource("dataset/GOOG_MAX.csv");
 
-        try {
-            Scanner sc = new Scanner(file);
+        try (Scanner scanner = new Scanner(resource.getFile())) {
             int iterator = 0;
-            while( sc.hasNext() ) {
-                String next = sc.next();
+            while (scanner.hasNext()) {
+                String next = scanner.next();
                 String[] split = next.split(",");
                 try {
                     StringBuilder append = new StringBuilder()
@@ -37,7 +35,6 @@ public class CsvPricesExtractor {
                             .append(" | Close: ")
                             .append(split[4]);
                     String s = append.toString();
-//                    System.out.println(s);
 
                     Date date = new Date();
                     date.setDate(split[0], true);
@@ -59,11 +56,9 @@ public class CsvPricesExtractor {
                 } catch (IndexOutOfBoundsException e) {
                     log.info(e.getMessage());
                 }
-//                    System.out.println(iterator);
-//                    Arrays.stream(split).forEach(x -> log.info(x));
+                iterator++;
             }
-            iterator++;
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
