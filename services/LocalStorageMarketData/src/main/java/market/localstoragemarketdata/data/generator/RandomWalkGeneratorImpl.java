@@ -58,7 +58,6 @@ public class RandomWalkGeneratorImpl implements RandomWalkGenerator {
         String price = String.valueOf(value);
         Mean mean = new Mean();
         mean.setPrice(price);
-
         String stringValue = String.valueOf(value);
 //        String dateString = date.toString();
 

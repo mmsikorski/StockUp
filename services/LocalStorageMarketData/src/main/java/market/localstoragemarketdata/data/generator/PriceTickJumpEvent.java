@@ -2,6 +2,7 @@ package market.localstoragemarketdata.data.generator;
 
 import market.localstoragemarketdata.data.Price;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
@@ -14,6 +15,13 @@ public class PriceTickJumpEvent {
     }
 
     public Function<Float, List<Double>> randomTicksAroundPrice() {
-        return value -> List.of(this.value, this.value, this.value, this.value);
+        return value -> {
+            String s = String.valueOf(value);
+            char[] chars = s.toCharArray();
+            ArrayList<Char> doubles = new ArrayList<>();
+            doubles.
+
+            return List.of(this.value, this.value, this.value, this.value)
+        };
     }
 }
