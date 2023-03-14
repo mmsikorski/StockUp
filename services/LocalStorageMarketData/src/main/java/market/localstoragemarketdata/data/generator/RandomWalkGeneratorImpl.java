@@ -5,6 +5,7 @@ import market.localstoragemarketdata.data.prices.Mean;
 import market.localstoragemarketdata.database.storage.FinancialDataStorage;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 public class RandomWalkGeneratorImpl implements RandomWalkGenerator {
@@ -53,7 +54,7 @@ public class RandomWalkGeneratorImpl implements RandomWalkGenerator {
     }
 
     @Override
-    public void loadDataToInMemoryStorage(LocalDateTime date, float value) {
+    public void loadDataToInMemoryStorage(LocalDateTime date, List<Double> value) {
         String price = String.valueOf(value);
         Mean mean = new Mean();
         mean.setPrice(price);
@@ -61,11 +62,12 @@ public class RandomWalkGeneratorImpl implements RandomWalkGenerator {
         String stringValue = String.valueOf(value);
 //        String dateString = date.toString();
 
-        storage.save(date, stringValue, stringValue, stringValue, stringValue);
+        storage.save(date, value.get(0), stringValue, stringValue, stringValue);
 
 
         localStorageRandomWalkService.loadMeanRandomValueToLocalStorage(date, mean);
     }
+
 
     @Override
     public float getPreviousValueFromLocalStorage() {

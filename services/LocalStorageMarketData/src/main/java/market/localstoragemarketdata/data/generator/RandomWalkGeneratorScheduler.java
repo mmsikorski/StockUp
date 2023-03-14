@@ -9,18 +9,24 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.lang.instrument.Instrumentation;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
 @Slf4j
 public class RandomWalkGeneratorScheduler {
     public static int MAX_TIME_DISTANCE_BETWEEN_TICKS = 1500;
     public static int MIN_TIME_DISTANCE_BETWEEN_TICKS = 100;
+    private final PriceTickJumpEvent priceTickJumpEvent;
+    private final Function<Float, List<Double>> doubleListFunction;
 
     public RandomWalkGenerator randomWalkGenerator;
     public Random random;
 
     public RandomWalkGeneratorScheduler(FinancialDataStorage financialDataStorage) {
         randomWalkGenerator = new RandomWalkGeneratorImpl(financialDataStorage);
+        priceTickJumpEvent = new PriceTickJumpEvent();
+        doubleListFunction = priceTickJumpEvent.randomTicksAroundPrice();
         random = new Random();
     }
 
@@ -37,8 +43,10 @@ public class RandomWalkGeneratorScheduler {
 
 
                 float value = randomWalkGenerator.generateRandomValue();
+                priceTickJumpEvent.receivedGeneratedMarketValue(value);
+
                 LocalDateTime date = randomWalkGenerator.generateRandomLocalDatetime();
-                randomWalkGenerator.loadDataToInMemoryStorage(date, value);
+                randomWalkGenerator.loadDataToInMemoryStorage(date, doubleListFunction.apply(value));
 
                 log.info("[LocalStorageMarketData] RandomWalk: date = {}, value = {}, size = {} , MB size = {} ", date, value, LocalStorage.meanRandomPrice.size());
             }
