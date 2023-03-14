@@ -10,10 +10,10 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="date" type="datetime" />
-            <column name="open" type="double precision"/>
-            <column name="close" type="double precision"/>
-            <column name="low" type="double precision"/>
-            <column name="high" type="double precision"/>
+            <column name="open" type="varchar(50)"/>
+            <column name="close" type="varchar(50)"/>
+            <column name="low" type="varchar(50)"/>
+            <column name="high" type="varchar(50)"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
