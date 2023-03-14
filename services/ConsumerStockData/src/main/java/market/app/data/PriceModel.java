@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 public class PriceModel {
 
-    String open;
+    double open;
     double close;
     double low;
     double high;
-    double date;
+    String date;
 
     @Override
     public String toString() {
