@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 
 public interface RandomWalkGenerator {
     RandomWalkRunner start();
-    float generateRandomValue();
+    double generateRandomValue();
     LocalDateTime generateRandomLocalDatetime();
     float generateRandomValueAroundTick();
-    void loadDataToInMemoryStorage(LocalDateTime date, float value);
+    void loadDataToInMemoryStorage(LocalDateTime date, double value);
     float getPreviousValueFromLocalStorage();
 }

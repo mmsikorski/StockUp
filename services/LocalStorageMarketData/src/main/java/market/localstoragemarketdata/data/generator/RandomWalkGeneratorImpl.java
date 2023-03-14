@@ -11,7 +11,7 @@ public class RandomWalkGeneratorImpl implements RandomWalkGenerator {
 
     private final Random random;
     private final FinancialDataStorage storage;
-    private float initMeanValue;
+    private double initMeanValue;
     private final LocalStorageRandomWalkService localStorageRandomWalkService;
 
     public RandomWalkGeneratorImpl(FinancialDataStorage financialDataStorage) {
@@ -27,7 +27,7 @@ public class RandomWalkGeneratorImpl implements RandomWalkGenerator {
     }
 
     @Override
-    public float generateRandomValue() {
+    public double generateRandomValue() {
         return generateRandomValue(0.0F, 0.0F);
     }
 
@@ -36,13 +36,12 @@ public class RandomWalkGeneratorImpl implements RandomWalkGenerator {
         return LocalDateTime.now();
     }
 
-    public float generateRandomValue(float mean, float stddev) { //Possible that we will create setters and getters for mean anf stddev
+    public double generateRandomValue(float mean, float stddev) { //Possible that we will create setters and getters for mean anf stddev
 //        float randomValue = random.nextFloat();
 //        float unchangedInitMeanValue = initMeanValue;
 
         double randomValue = 10.0*random.nextGaussian(0, 1);
-        float finalRandomValue = Float.parseFloat(String.valueOf(randomValue));
-        initMeanValue = initMeanValue + finalRandomValue < 0 || initMeanValue + finalRandomValue > 2500 ? initMeanValue : initMeanValue + finalRandomValue;
+        initMeanValue = initMeanValue + randomValue < 0 || initMeanValue + randomValue > 2500 ? initMeanValue : initMeanValue + randomValue;
 
         return initMeanValue;
     }
@@ -53,15 +52,13 @@ public class RandomWalkGeneratorImpl implements RandomWalkGenerator {
     }
 
     @Override
-    public void loadDataToInMemoryStorage(LocalDateTime date, float value) {
-        String price = String.valueOf(value);
+    public void loadDataToInMemoryStorage(LocalDateTime date, double value) {
         Mean mean = new Mean();
-        mean.setPrice(price);
+        mean.setPrice(value);
 
-        String stringValue = String.valueOf(value);
 //        String dateString = date.toString();
 
-        storage.save(date, stringValue, stringValue, stringValue, stringValue);
+        storage.save(date, value, value, value, value);
 
 
         localStorageRandomWalkService.loadMeanRandomValueToLocalStorage(date, mean);

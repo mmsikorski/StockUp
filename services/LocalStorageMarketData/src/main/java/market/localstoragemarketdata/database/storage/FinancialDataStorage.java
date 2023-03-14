@@ -5,6 +5,7 @@ import market.localstoragemarketdata.database.repo.FinancialDataRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Component
@@ -20,7 +21,7 @@ public class FinancialDataStorage {
         this.financialDataMapper = financialDataMapper;
     }
 
-    public void save(LocalDateTime date, String open, String close, String low, String high) {
+    public void save(LocalDateTime date, Double open, Double close, Double low, Double high) {
         FinancialDataEntity financialDataEntity = financialDataMapper.toEntity(date, open, close, low, high);
         financialDataRepo.save(financialDataEntity);
     }

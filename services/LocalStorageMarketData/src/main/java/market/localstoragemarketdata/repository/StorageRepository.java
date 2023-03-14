@@ -35,10 +35,10 @@ public class StorageRepository {
                 }).toList();
 
         return collect.stream().map(x -> {
-            String open = LocalStorage.openPrices.get(x).getPrice();
-            String close = LocalStorage.closePrices.get(x).getPrice();
-            String high = LocalStorage.highPrices.get(x).getPrice();
-            String low = LocalStorage.lowPrices.get(x).getPrice();
+            double open = LocalStorage.openPrices.get(x).getPrice();
+            double close = LocalStorage.closePrices.get(x).getPrice();
+            double high = LocalStorage.highPrices.get(x).getPrice();
+            double low = LocalStorage.lowPrices.get(x).getPrice();
             return new RequestData(x.getDate(), open, close, low, high);
         }).toList();
     }

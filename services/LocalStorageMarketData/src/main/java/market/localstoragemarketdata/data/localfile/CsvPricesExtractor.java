@@ -40,16 +40,16 @@ public class CsvPricesExtractor {
                     date.setDate(split[0], true);
 
                     Open open = new Open();
-                    open.setPrice(split[1]);
+                    open.setPrice(Double.parseDouble(split[1]));
 
                     High high = new High();
-                    high.setPrice(split[2]);
+                    high.setPrice(Double.parseDouble(split[2]));
 
                     Low low = new Low();
-                    low.setPrice(split[3]);
+                    low.setPrice(Double.parseDouble(split[3]));
 
                     Close close = new Close();
-                    close.setPrice(split[4]);
+                    close.setPrice(Double.parseDouble(split[4]));
 
                     localStorageService.putPriceToLocalStorage(date, open, close, high, low);
 
