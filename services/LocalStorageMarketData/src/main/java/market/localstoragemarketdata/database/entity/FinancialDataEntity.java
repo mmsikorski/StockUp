@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,16 +19,17 @@ public class FinancialDataEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, updatable = false)
     Long id;
-    @Column
+    @Column(name = "date")
     LocalDateTime date;
-    @Column
-    String open;
-    @Column
-    String close;
-    @Column
-    String low;
-    @Column
-    String high;
+    @Column(name = "open")
+    Double open;
+    @Column(name = "close")
+    Double close;
+    @Column(name = "low")
+    Double low;
+    @Column(name = "high")
+    Double high;
 
 }

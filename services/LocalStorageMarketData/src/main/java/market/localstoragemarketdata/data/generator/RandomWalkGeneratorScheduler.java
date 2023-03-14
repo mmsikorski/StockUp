@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.lang.instrument.Instrumentation;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -36,7 +37,7 @@ public class RandomWalkGeneratorScheduler {
                 randomTimeDistance = random.nextInt(MIN_TIME_DISTANCE_BETWEEN_TICKS, MAX_TIME_DISTANCE_BETWEEN_TICKS);
 
 
-                float value = randomWalkGenerator.generateRandomValue();
+                double value = randomWalkGenerator.generateRandomValue();
                 LocalDateTime date = randomWalkGenerator.generateRandomLocalDatetime();
                 randomWalkGenerator.loadDataToInMemoryStorage(date, value);
 

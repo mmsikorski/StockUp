@@ -5,4 +5,5 @@ import market.localstoragemarketdata.data.Price;
 
 @Data
 public class Open extends AbstractPrice implements Price {
+
 }

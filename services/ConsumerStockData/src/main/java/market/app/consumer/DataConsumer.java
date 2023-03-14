@@ -7,9 +7,11 @@ import market.app.data.PriceModel;
 import market.app.data.PriceModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.ConnectException;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -47,14 +49,13 @@ public class DataConsumer {
             long e = System.currentTimeMillis();
             if ( (l - e) % 1000 == 0 ) {
                 String response = null;
-                response = restTemplate.getForObject(url, String.class); //TODO: It's not safe
                 try {
                     extracted();
-                    List<PriceModel> priceModels = priceModelMapper.fromStringToListPrice(response);
-                    priceModels.forEach(x -> log.info("[ConsumerStockData] (Thread: {}) | Req: {} | Received data: {}",
-                            this.thread.getName() , countRequests , x));
-                } catch (JsonProcessingException ex) {
-                    log.info("[ConsumerStockData] Error with JsonProcessing" + ex.getMessage());
+                    PriceModel[] priceModels = restTemplate.getForObject(url, PriceModel[].class);
+                    Arrays.asList(priceModels).forEach(x -> log.info("[ConsumerStockData] (Thread: {}) | Req: {} | Received data: {}",
+                            this.thread.getName(), countRequests, x));
+                } catch (RestClientException ex) {
+                    log.info("[ConsumerStockData] Error with RestClient" + ex.getMessage());
                     throw new RuntimeException(ex);
                 }
             }
