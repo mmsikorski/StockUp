@@ -53,7 +53,7 @@ public class CsvPricesExtractor {
 
                     localStorageService.putPriceToLocalStorage(date, open, close, high, low);
 
-                } catch (IndexOutOfBoundsException e) {
+                } catch (IndexOutOfBoundsException | NumberFormatException e) {
                     log.info(e.getMessage());
                 }
                 iterator++;
